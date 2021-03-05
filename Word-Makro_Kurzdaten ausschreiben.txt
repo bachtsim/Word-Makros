@@ -1,0 +1,77 @@
+Sub Datum_ausschreiben()
+'
+' Datum_ausschreiben Makro
+'
+'BA-ZH / Bam / 18.10.2017
+
+Dim i As Long
+Dim ii As Long
+Dim y As Long
+
+Dim Kurzmonat(1 To 12) As String
+
+Kurzmonat(1) = "01"
+Kurzmonat(2) = "02"
+Kurzmonat(3) = "03"
+Kurzmonat(4) = "04"
+Kurzmonat(5) = "05"
+Kurzmonat(6) = "06"
+Kurzmonat(7) = "07"
+Kurzmonat(8) = "08"
+Kurzmonat(9) = "09"
+Kurzmonat(10) = "10"
+Kurzmonat(11) = "11"
+Kurzmonat(12) = "12"
+
+Dim Langmonat(1 To 12) As String
+
+Langmonat(1) = "Januar"
+Langmonat(2) = "Februar"
+Langmonat(3) = "März"
+Langmonat(4) = "April"
+Langmonat(5) = "Mai"
+Langmonat(6) = "Juni"
+Langmonat(7) = "Juli"
+Langmonat(8) = "August"
+Langmonat(9) = "September"
+Langmonat(10) = "Oktober"
+Langmonat(11) = "November"
+Langmonat(12) = "Dezember"
+
+
+' Schleife für die Suchen-Ersetzen-Funktion
+
+
+    For ii = 1 To 12  ' Monatsschleife
+    
+        For i = 1 To 31  ' Tagesschleife
+          Debug.Print i
+            
+          Selection.Find.ClearFormatting
+          Selection.Find.Replacement.ClearFormatting
+          With Selection.Find
+            If i < 10 Then
+             .Text = "0" & [i] & "." & Kurzmonat(ii) & "."  ' zu suchendes Datum zusammensetzen
+          
+            Else
+              .Text = [i] & "." & Kurzmonat(ii) & "." ' zu suchendes Datum zusammensetzen
+            End If
+
+              .Replacement.Text = [i] & ". " & Langmonat(ii) & " "  ' zu ersetzendes Datum zusammensetzen
+              .Forward = True
+              .Wrap = wdFindContinue
+              .Format = False
+              .MatchCase = False
+              .MatchWholeWord = False
+              .MatchWildcards = False
+              .MatchSoundsLike = False
+              .MatchAllWordForms = False
+             End With
+            Selection.Find.Execute Replace:=wdReplaceAll
+        Next
+           
+    Next
+
+End Sub
+
+
